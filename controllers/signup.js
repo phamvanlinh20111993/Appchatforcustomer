@@ -55,43 +55,11 @@ router.route('/logsg')
 
 	//gui ma email xac nhan nguoi dung sau khi kick nut signin
 	if(typeof req.body.request_verify_code != 'undefined'){
-		name = req.body.name
-		email = req.body.email
-		age = req.body.Age
-		pass = req.body.pass
-	/*	const nodemailer = require('nodemailer')
-		//var smtpTransport = require('nodemailer-smtp-transport')
-
-		let transporter = nodemailer.createTransport({
-			service: 'gmail',
-			auth: {//tai khoan gmail chinh cua server
-				user: 'duanwebptudweb@gmail.com',
-				pass: 'DuAnWebPTUDWEB123',
-			}
-		});
-        
-		var Code = makeid();//tao ngau nhien 1 string
-		console.log(Code)
-		User_enter_code = Code;
-		let mailOptions = {
-			from: 'duanwebptudweb@gmail.com',
-			to: email,//email nguoi dung
-			subject: 'Ma xac thuc tai khoan',
-			html: '<div><div><span style="font-size:140%;"><i>Chao mung ban da dang nhap vao he thong chat online cua chung toi!!!</i></span></div><div><p>Ma xac thuc tai khoan cua ban la: </p><b>'+Code+'</b></div></div>'
-		}
-
-		transporter.sendMail(mailOptions, (error, info)=>{
-			if(error){
-				console.log("Loi nay day: " + error)
-			}
-			console.log('Message %s sent: %s', info.messageId, info.response)
-		}) */
-/*	}
-	else if(typeof req.body.verificationcodes != 'undefined')//dang ki thanh cong
-	{	 */
-		//ma xac thuc la chinh xac
-	//	if(req.body.verificationcodes.localeCompare(User_enter_code) == 0)
-	//	{
+			name = req.body.name
+			email = req.body.email
+			age = req.body.Age
+			pass = req.body.pass
+	
 			//luu tru thong tin nguoi dung
 			var pass1 = md5(pass)
 			var user_chat = new models.User({
@@ -136,11 +104,15 @@ router.route('/logsg')
 					}
 				}) }, 400)//400 miliseconds run function
  			
-		//}else{
-		//	res.render("login_signup", {code_err: 1});
-		//}
 		
 	}
+})
+
+router.route('home')
+.get(function(req, res)
+{
+	console.log("Da chay");
+	res.render('home')
 })
 
 module.exports = router;

@@ -500,7 +500,7 @@
                 })
               }
 
-              setTimeout(Load_user(1, "", 10), 300)//load danh sach hien thi nguoi dung
+              setTimeout(Load_user(1, "", 12), 300)//load danh sach hien thi nguoi dung
 
               setTimeout(function(){
                 socket.emit('chattingwithsomeone', Information_user('id'))

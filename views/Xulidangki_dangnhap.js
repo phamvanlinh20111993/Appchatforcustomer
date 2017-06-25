@@ -8,7 +8,7 @@
           data:{request_verify_code: 1, email: mail, name: alias, Age: age, pass: password},
           success: function(data)
           {
-             alert("Da chay");
+             window.location.href = "http://localhost:5555/user/home"
           }
         })
      }

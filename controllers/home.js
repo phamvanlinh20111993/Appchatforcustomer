@@ -116,7 +116,7 @@ router.route('/home')//dieu huong app
 		    models.User.find({'Admin': {$ne: 1}}, {created_at: 0, password: 0, __v: 0})
          .sort({status: -1, updated_at: -1})
          .limit(parseInt(num_of_rq))//gioi han so nguoi can tim
-       //  .skip((parseInt(num_of_rq) - 12))//bo qua so ban ghi tinh tu vi tri dau tien
+         .skip((parseInt(num_of_rq) - 12))//bo qua so ban ghi tinh tu vi tri dau tien
          .exec(function(err, users)
          {
 			   if (err) throw err;
@@ -400,10 +400,11 @@ router.route('/home')//dieu huong app
 
    }else//kiem tra session da duoc khai bao moi chuyen qua trang khac
    {
+	   console.log("khong thay chay")
 		if(!req.session.name){//nguoi dung chua dang nhap
 			res.redirect('logsg');
 		}else
-      {
+		{
         //luu lai session
          req.session.save(function(err) {
             // session saved 
