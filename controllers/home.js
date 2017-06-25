@@ -400,7 +400,6 @@ router.route('/home')//dieu huong app
 
    }else//kiem tra session da duoc khai bao moi chuyen qua trang khac
    {
-	   console.log("khong thay chay")
 		if(!req.session.name){//nguoi dung chua dang nhap
 			res.redirect('logsg');
 		}else

@@ -18,8 +18,12 @@ function makeid()
 }
 
 router.route('/')
- .get(function(req, res){
- 	res.redirect('logsg');
+.get(function(req, res){
+ //console.log(req.originalUrl)
+ 	if(req.originalUrl.toString() === "/user/")
+ 		res.redirect('logsg');
+ 	else 
+ 	    res.redirect('user/logsg');
 })
 
 router.route('/logsg')
