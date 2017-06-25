@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Login Web Chat </title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="shortcut icon" href="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQdgTzmbD2VzfylBIdYhyXCmwNUV6W0N2M3_JzYdiS9SlLv-d7DHA">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <style type="text/css">
+
+  	.prettyline {
+    	  height: 5px;
+    	  border-top: 0;
+    	  background: #c4e17f;
+    	  border-radius: 5px;
+    	  background-image: -webkit-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+    	  background-image: -moz-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+    	  background-image: -o-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+    	  background-image: linear-gradient(to right, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+    }
+
+    #myProgress {
+      width: 100%;
+      background-color: #ddd;
+    }
+
+    #myBar {
+      width: 0%;
+      height: 30px;
+      background-color: #4CAF50;
+      text-align: center;
+      line-height: 30px;
+      color: white;
+    }
+
+    a{
+      cursor: pointer;
+    }
+
+  </style>
+</head>
+<body>
+<!-- Button trigger modal -->
+<noscript>
+  <div class="alert alert-warning">
+      <strong>Cảnh báo!</strong> Bạn đã tắt javascript trên trang web này. Ứng dụng này sử dụng javacript
+      để phát triển, vui lòng bật lại script. Thân ái.
+  </div>
+</noscript>
+
+<div class="container" style="margin-top: 5%;"> 
+    <hr class="prettyline">
+    <br>
+    <center>
+    <h1><b>Sorry</b></h1>
+    <h3>You need to sign in or register for this service</h3>
+    <em>Donate Dogecoin: DD7StzN1wGQhE4a47uDsBodkS4DE8gxcwh</em>
+    <br>
+  <button class="btn btn-primary btn-lg" href="#signup" data-toggle="modal" data-target=".bs-modal-sm">Sign In/Register</button></br>
+  </center>
+
+<!--Giao dien cho phep tao lai mat khau
+  <!--modal-->
+<div id="pwdModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+  <div class="modal-content">
+      <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          <h1 class="text-center">What's My Password?</h1>
+      </div>
+      <div class="modal-body">
+          <div class="col-md-12">
+                <div class="panel panel-default" style="margin-top: 6%;">
+                    <div class="panel-body">
+                        <div class="text-center">
+                          <h3 style="font-style: italic;font-size: 110%;">If you have forgotten your password you can reset it here.</h3>
+                            <div class="panel-body">
+                                <fieldset>
+                                    <div class="form-group">
+                                      <input class="form-control input-lg" placeholder="E-mail Address" name="email" type="email" autofocus="">
+                                      <h4 style="color:red;font-size:oblique;"></h4>
+                                    </div>
+                                      <input class="btn btn-lg btn-primary btn-block" value="Send My Password" type="submit">
+                                </fieldset>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- form nhap lai password -->
+                <div class="panel panel-default" style="margin-top: 6%;display: none;">
+                  <div class="panel-body">
+                        <div class="text-center">
+                          <h3>Enter your's new password:</h3>
+                            <div class="panel-body">
+                                <fieldset>
+                                     <div class="form-group">
+                                       <input class="form-control input-lg" placeholder="Mail authentication code" name="email" type="email" maxlength="60" autofocus="">
+                                        <h4 style="color:red;font-size:oblique;"></h4>
+                                    </div>
+                                    <div class="form-group">
+                                       <input class="form-control input-lg" placeholder="New password" name="pass" type="password" maxlength="25" minlength="8" autofocus="">
+                                        <h4 style="color:red;font-size:oblique;"></h4>
+                                    </div>
+                                    <div class="form-group">
+                                       <input class="form-control input-lg" placeholder="Repeat new password" name="confirmpass" type="password" maxlength="25" minlength="8">
+                                        <h4 style="color:red;font-size:oblique;"></h4>
+                                    </div>
+                                    <input class="btn btn-lg btn-primary btn-block" value="Done" type="submit">
+                                </fieldset>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+      </div>
+      <div class="modal-footer">
+          <div class="col-md-12">
+          <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+        </div> 
+      </div>
+  </div>
+  </div>
+</div>
+
+  <br>
+    <hr class="prettyline">
+
+    <% if(typeof code_err != 'undefined'){  %>
+    <% if(code_err == 1){ %>
+     <div class="alert alert-info" style="margin-top: 2%;">
+        <strong>Sorry! </strong>Mã xác thực của bạn không đúng. Vui lòng đăng kí lại.
+     </div>
+     <%}else{ %>
+     <div class="alert alert-warning">
+       <strong>Warning!</strong> Bạn đã đăng nhập không đúng tài khoản. Vui lòng thử lại.
+     </div>
+      <a href="#" data-target="#pwdModal" data-toggle="modal">Forgot my password?</a>
+    <%}}%>
+ </div>
+
+<!-- Modal -->
+<div class="modal fade bs-modal-sm" id="myModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <br>
+        <div class="bs-example bs-example-tabs">
+            <ul id="myTab" class="nav nav-tabs">
+              <li class="active"><a href="#signin" data-toggle="tab">Sign In</a></li>
+              <li class=""><a href="#signup" data-toggle="tab">Register</a></li>
+              <li class=""><a href="#why" data-toggle="tab">Why?</a></li>
+            </ul>
+        </div>
+      <div class="modal-body">
+        <div id="myTabContent" class="tab-content">
+        <div class="tab-pane fade in" id="why">
+        <p>We need this information so that you can receive access to the site and its content. Rest assured your information will not be sold, traded, or given to anyone.</p>
+        <p></p><br> Please contact <a mailto:href="duanwebptudweb@gmail.com"></a>duanwebptudweb@gmail.com</a> for any other inquiries.</p>
+        </div>
+
+        <div class="tab-pane fade active in" id="signin">
+            <form class="form-horizontal" method="post" action="/user/login">
+            <p id="cc">Hi you! Come in :)))</p>
+            <fieldset>
+            <!-- Sign In Form -->
+            <!-- Text input-->
+            <div class="control-group">
+              <label class="control-label" for="userid">Email:</label>
+              <div class="input-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                <input required="" name="username" type="email" class="form-control" placeholder="Pham Van Linh" class="input-medium" required="" value="<%=(typeof email !== 'undefined')? email : ''%>" autofocus>
+              </div>
+            </div>
+
+            <!-- Password input-->
+            <div class="control-group">
+              <label class="control-label" for="passwordinput">Password:</label>
+              <div class="input-group">
+              <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                <input required="" name="password" class="form-control" type="password" placeholder="********" class="input-medium" value="<%=(typeof pass !== 'undefined')? pass : ''%>">
+              </div>
+            </div>
+
+            <!-- Multiple Checkboxes (inline) -->
+            <div class="control-group">
+              <label class="control-label" for="rememberme"></label>
+              <div class="controls"  style="margin-left:3%;">
+                <label class="checkbox inline" for="rememberme-0">
+                  <input type="checkbox" name="rememberme" id="rememberme-0" value="Remember me" checked>
+                  Remember me
+                </label>
+              </div>
+            </div>
+
+            <!-- Button -->
+            <div class="control-group">
+              <label class="control-label" for="signin"></label>
+              <div class="controls">
+                <button id="signin" type = "button" name="signin" class="btn btn-success">Sign In</button>
+              </div>
+            </div>
+            </fieldset>
+            </form><!--ket thuc form dang nhap  -->
+        </div>
+
+        <div class="tab-pane fade" id="signup">
+          <form class="form-horizontal" id="register">
+          <p id="cc1"></p>
+            <fieldset>
+            <!-- Sign Up Form -->
+            <!-- Text input-->
+            <div class="control-group">
+              <label class="control-label" for="Email">Email(Gmail):</label>
+              <div class="controls">
+                <input id="Email" name="Email" class="form-control" type="text" placeholder="Phamvanlinh@gmail.com or Phamvanlinh@vnu.edu.vn" class="input-large" required="" maxlength="40" autofocus>
+              </div>
+            </div>
+            
+            <!-- Text input-->
+            <div class="control-group">
+              <label class="control-label" for="userid">Alias:</label>
+              <div class="controls">
+                <input id="userid" name="userid" class="form-control" type="text" placeholder="Linhcute" class="input-large" required="" maxlength="20">
+              </div>
+            </div>
+
+            <div class="control-group">
+              <label class="control-label" for="userid">Age:</label>
+              <div class="controls">
+                <input id="ageid" name="userid" class="form-control" type="number" min="16" max = "60" placeholder="16" class="input-large" required="">
+              </div>
+              <a><em>Are you enough 16 years old?</em></a>
+            </div>
+            
+            <!-- Password input-->
+            <div class="control-group">
+              <label class="control-label" for="password">Password:</label>
+              <div class="controls">
+                <input id="password" name="password" class="form-control" type="password" placeholder="********" class="input-large" required="" maxlength="25" minlength="8">
+                <em>6-25 Characters</em>
+              </div>
+            </div>
+            
+            <!-- Text input-->
+            <div class="control-group">
+              <label class="control-label" for="reenterpassword">Re-Enter Password:</label>
+              <div class="controls">
+                <input id="reenterpassword" class="form-control" name="reenterpassword" type="password" placeholder="********" class="input-large" required="">
+              </div>
+            </div>
+            
+            <!-- Multiple Radios (inline) -->
+            <br>
+            <div class="control-group">
+              <label class="control-label" for="humancheck">Humanity Check:</label>
+              <div class="controls" style="margin-left: 3%;">
+                <label class="radio inline" for="humancheck-0">
+                  <input type="radio" name="humancheck" id="humancheck-0" value="robot" checked="checked">I'm a Robot</label>
+                <label class="radio inline" for="humancheck-1">
+                  <input type="radio" name="humancheck" id="humancheck-1" value="human">I'm Human</label>
+              </div>
+            </div>
+            
+            <!-- Button -->
+            <div class="control-group">
+              <label class="control-label" for="confirmsignup"></label>
+              <div class="controls">
+                <button type="button" name="confirmsignup" class="btn btn-success">Sign Up</button>
+              </div>
+            </div>
+            </fieldset>
+          </form>
+          
+          <div id="myProgress" style="display: none;">
+            <div id="myBar">0%</div>
+          </div>
+		  
+          <!-- <form class="form-horizontal" id="verify" method="post" action="" style="display: none;">
+           <!-- <h3>Your email is under investigation? Please check your email and fill here</h3>
+          <!--  <div class="control-group">
+          <!--    <label class="control-label" for="verification codes">Verification codes:</label>
+          <!--    <div class="controls">
+         <!--       <input id="verificationcodes" class="form-control" name="verificationcodes" type="text" placeholder="************" class="input-large" required="">
+         <!--     </div>
+         <!--   </div>
+         <!--   <div class="control-group">
+         <!--     <label class="control-label" for="confirmverify"></label>
+          <!--    <div class="controls">
+          <!--      <button id="confirmsyous" name="confirmverify" class="btn btn-success">Done!!!</button>
+        <!--      </div>
+        <!--    </div>
+      <!--    </form> //-->
+      </div>
+    </div>
+  </div>
+
+      <div class="modal-footer">
+       <center>
+         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </center>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="/Xulidangki_dangnhap.js"></script> 
+
+</body>
+</html>

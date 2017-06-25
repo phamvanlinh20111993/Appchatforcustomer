@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <title>Chat Box Admin</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="/admincss.css">
+  <link rel="stylesheet" href="admincss.css">
+  <link rel="shortcut icon" href="http://oxidemod.org/data/resource_icons/1/1123.jpg?1453474612">
+  
+  <script>
+	  $(function () {
+         $('.navbar-toggle-sidebar').click(function () {
+  		    $('.navbar-nav').toggleClass('slide-in');
+  		    $('.side-body').toggleClass('body-slide-in');
+  		    $('#search').removeClass('in').addClass('collapse').slideUp(200);
+  	   });
+
+  	   $('#search-trigger').click(function () {
+  	      $('.navbar-nav').removeClass('slide-in');
+  		    $('.side-body').removeClass('body-slide-in');
+  		    $('.search-input').focus();
+  	   });
+    });
+  </script>
+  <style type="text/css">
+    .not_underline:hover{
+      text-decoration: none;
+      color: green;
+    }
+  </style>
+</head>
+<body>
+<!--Modal Tao thong bao cho nguoi dung-->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Tạo thông báo</h4>
+        </div>
+        <div class="modal-body">
+          <p>This is a large modal.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<nav class="navbar navbar-default navbar-static-top">
+    <div class="container-fluid">
+    	<!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle navbar-toggle-sidebar collapsed">
+			MENU
+			</button>
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="#">
+				Administrator
+			</a>
+		</div>
+
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">      
+			<form class="navbar-form navbar-left" method="GET" role="search">
+				<div class="form-group">
+					<input type="text" name="search" class="form-control" placeholder="Search Chat">
+				</div>
+				<button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
+			</form>
+
+			<ul class="nav navbar-nav navbar-right">
+        <li><a href=""><span class="glyphicon glyphicon-home"> Home</span></a></li>
+				<li><a href="" target="_blank"><span class="glyphicon glyphicon-new-window"></span> Double Site</a></li>
+				<li>
+          <form class="form-horizontal" method="post" action="/user/home" style="margin-top: 8%;">
+            <input type = "hidden" name = "request_log_out" value = 1 >
+            <span class="glyphicon glyphicon-log-out" style="margin-top: 2%;"></span> 
+            <button name="logout" class="btn btn-link not_underline" style="margin-left: -15%;">&nbsp;Log out</button>
+          </form>
+        </li>
+			</ul>
+		</div><!-- /.navbar-collapse -->
+	</div><!-- /.container-fluid -->
+</nav> 
+
+
+<div class="container-fluid main-container">
+ <div class="col-md-2 sidebar">
+  <div class="row">
+	<!-- uncomment code for absolute positioning tweek see top comment in css -->
+	<div class="absolute-wrapper"> </div>
+	<!-- Menu -->
+	<div class="side-menu">
+		<nav class="navbar navbar-default" role="navigation">
+			<!-- Main Menu -->
+			<div class="side-menu-container">
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="#"><span class="glyphicon glyphicon-dashboard"></span> Dashboard</a></li>
+					<li><a href="#"><span class="glyphicon glyphicon-user"></span><span class="glyphicon glyphicon-user" style="margin-left: -5%;"></span>Manage users</a></li>
+					<li><a href="#"><span class="glyphicon glyphicon-exclamation-sign"></span></span> Warning</a></li>
+
+					<!-- Dropdown-->
+					<li class="panel panel-default" id="dropdown">
+						<a data-toggle="collapse" href="#dropdown-lvl1">
+							<span class="glyphicon glyphicon-user"></span>General Info <span class="caret"></span>
+						</a>
+
+						<!-- Dropdown level 1 -->
+						<div id="dropdown-lvl1" class="panel-collapse collapse">
+							<div class="panel-body">
+								<ul class="nav navbar-nav">
+									<li><a href="#">Image</a></li>
+									<li><a href="#">Infor admin</a></li>
+								</ul>
+							</div>
+						</div>
+					</li>
+
+					<li><a href="#" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-bullhorn"></span>Create notify</a></li>
+          <li><a href="#"> <span class="glyphicon glyphicon-calendar"></span></span>Calendar</a></li>
+          <li><a href="#"><span class="glyphicon glyphicon-education"></span> Logistics</a></li>
+
+				</ul>
+			</div><!-- /.navbar-collapse -->
+		</nav>
+
+	</div>
+</div>  	
+</div>
+    <div class="col-md-10 content" style="display: none;">
+        <div>
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <span class="glyphicon glyphicon-list"></span>Danh sách cảnh báo
+                </div>
+                <div class="panel-body">
+                </div>
+                <div class="panel-footer">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>
+                                Total Count <span class="label label-info">25</span></h6>
+                        </div>
+                        <div class="col-md-6">
+                            <ul class="pagination pagination-sm pull-right">
+                                <li class="disabled"><a href="javascript:void(0)">«</a></li>
+                                <li class="active"><a href="javascript:void(0)">1 <span class="sr-only">(current)</span></a></li>
+                                <li><a href="">2</a></li>
+                                <li><a href="">3</a></li>
+                                <li><a href="">4</a></li>
+                                <li><a href="">5</a></li>
+                                <li><a href="javascript:void(0)">»</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+  
+  </div>
+
+  	<div class="col-md-10 content">
+        <div>
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <span class="glyphicon glyphicon-list"></span>User Lists
+                    <div class="pull-right action-buttons">
+                        <div class="btn-group pull-right">
+                            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                <span class="glyphicon glyphicon-cog" style="margin-right: 0px;"></span>
+                            </button>
+                            <ul class="dropdown-menu slidedown">
+                                <li><a href=""><span class="glyphicon glyphicon-pencil"></span>Edit</a></li>
+                                <li><a href=""><span class="glyphicon glyphicon-trash"></span>Delete</a></li>
+                                <li><a href=""><span class="glyphicon glyphicon-flag"></span>Flag</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <div class="checkbox">
+                                <input type="checkbox" id="checkbox" />
+                                <label for="checkbox">
+                                    List group item heading
+                                </label>
+                            </div>
+                            <div class="pull-right action-buttons">
+                                <a href=""><span class="glyphicon glyphicon-pencil"></span></a>
+                                <a href="" class="trash"><span class="glyphicon glyphicon-trash"></span></a>
+                                <a href="" class="flag"><span class="glyphicon glyphicon-flag"></span></a>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="checkbox">
+                                <input type="checkbox" id="checkbox2" />
+                                <label for="checkbox2">
+                                    List group item heading 1
+                                </label>
+                            </div>
+                            <div class="pull-right action-buttons">
+                                <a href=""><span class="glyphicon glyphicon-pencil"></span></a>
+                                <a href="" class="trash"><span class="glyphicon glyphicon-trash"></span></a>
+                                <a href="" class="flag"><span class="glyphicon glyphicon-flag"></span></a>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="checkbox">
+                                <input type="checkbox" id="checkbox3" />
+                                <label for="checkbox3">
+                                    List group item heading 2
+                                </label>
+                            </div>
+                            <div class="pull-right action-buttons">
+                                <a href=""><span class="glyphicon glyphicon-pencil"></span></a>
+                                <a href="" class="trash"><span class="glyphicon glyphicon-trash"></span></a>
+                                <a href="" class="flag"><span class="glyphicon glyphicon-flag"></span></a>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="checkbox">
+                                <input type="checkbox" id="checkbox4" />
+                                <label for="checkbox4">
+                                    List group item heading 3
+                                </label>
+                            </div>
+                            <div class="pull-right action-buttons">
+                                <a href=""><span class="glyphicon glyphicon-pencil"></span></a>
+                                <a href="" class="trash"><span class="glyphicon glyphicon-trash"></span></a>
+                                <a href="" class="flag"><span class="glyphicon glyphicon-flag"></span></a>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="checkbox">
+                                <input type="checkbox" id="checkbox5" />
+                                <label for="checkbox5">
+                                    List group item heading 4
+                                </label>
+                            </div>
+                            <div class="pull-right action-buttons">
+                                <a href=""><span class="glyphicon glyphicon-pencil"></span></a>
+                                <a href="" class="trash"><span class="glyphicon glyphicon-trash"></span></a>
+                                <a href="" class="flag"><span class="glyphicon glyphicon-flag"></span></a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="panel-footer">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>
+                                Total Count <span class="label label-info">25</span></h6>
+                        </div>
+                        <div class="col-md-6">
+                            <ul class="pagination pagination-sm pull-right">
+                                <li class="disabled"><a href="javascript:void(0)">«</a></li>
+                                <li class="active"><a href="javascript:void(0)">1 <span class="sr-only">(current)</span></a></li>
+                                <li><a href="">2</a></li>
+                                <li><a href="">3</a></li>
+                                <li><a href="">4</a></li>
+                                <li><a href="">5</a></li>
+                                <li><a href="javascript:void(0)">»</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+	</div>
+</div>
+
+<footer class="pull-left footer">
+  	<p class="col-md-12">
+  		<hr class="divider">
+  			Copyright &COPY; 2015 <a href="">Pham Van Linh</a>
+  	</p>
+</footer>
+	
+</body>
+</html>

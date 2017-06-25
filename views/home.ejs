@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <!--[if IE]>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <![endif]-->
+    <title>Chat Box Everywhere</title>
+    <!-- BOOTSTRAP CORE STYLE CSS -->
+    <link href="/assets/css/bootstrap.css" rel="stylesheet" />
+    <!-- FONT AWESOME  CSS -->
+    <link href="/assets/css/font-awesome.css" rel="stylesheet" />
+    <!-- CUSTOM STYLE CSS -->
+    <link href="/assets/css/style.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQdgTzmbD2VzfylBIdYhyXCmwNUV6W0N2M3_JzYdiS9SlLv-d7DHA">
+    <script src="http://127.0.0.1:5556/socket.io/socket.io.js"></script>
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+  <style>
+    hr { 
+      display: block;
+      margin-top: 0.5em;
+      margin-bottom: 0.5em;
+      margin-left: auto;
+      margin-right: auto;
+      border-style: inset;
+      border-width: 1px;
+    } 
+
+    .tagp{
+      color: red;
+      font-size: 103%
+    }
+
+    .not_underline:hover{
+      text-decoration: none;
+      color: green;
+    }
+  </style>
+ 
+</head>
+
+<body>
+
+    <noscript>
+      <div class="alert alert-warning">
+        <strong>Cảnh báo!</strong> Bạn đã tắt javascript trên trang web này. Ứng dụng này sử dụng javacript
+      để xây dựng và phát triển, do đó ứng dụng này sẽ không thể hoạt động được. Vui lòng bật lại script. Thân ái.
+      </div>
+    </noscript>
+
+    <!-- Thông báo lạm dụng chức năng cảnh báo người dùng -->
+    <div class="modal fade" id="myModal10" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+               <button type="button" class="close" data-dismiss="modal">&times;</button>
+               <h4 class="modal-title">Cảnh báo lạm dụng</h4>
+            </div>
+            <div class="modal-body">
+               <p>Hệ thống sẽ ban hoặc xóa tài khoản của bạn nếu bạn lạm dụng chức năng này.</p>
+            </div>
+            <div class="modal-footer">
+               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+         </div>
+      </div>
+   </div>
+
+
+    <!-- Người dùng muốn giới thiệu về bản thân mình hơn   -->
+    <div id="myModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+
+    <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Chỉnh sửa/bổ sung thông tin</h4>
+          </div>
+
+          <div class="modal-body">
+              <div class="input-group" data-toggle="tooltip" title="Chỉnh sửa tên">
+               <input id="name" type="text" class="form-control" name="name" placeholder="User name" value="<%=session.name%>">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>   
+              </div>
+              <p class="tagp"></p>
+              </br>
+
+              <div class="input-group">
+                <label class="checkbox-inline"><input type="checkbox" value="12345">Change pass</label>
+                <label class="checkbox-inline"><input type="checkbox" value="54321" checked="">Not change</label>
+              </div>
+              </br>
+
+              <div class="input-group" data-toggle="tooltip" title="Nhập mật khẩu hiện tại">
+                <span class="input-group-addon">Cur-pass</span>
+                <input id="password" type="password" class="form-control" name="pass" placeholder="current password" disabled="true">
+              </div>            
+              <p class="tagp"></p>
+              <br>
+
+              <div class="input-group" data-toggle="tooltip" title="Nhập mật khẩu mới">
+                <input id="password" type="password" class="form-control" name="pass" placeholder="new password" value="" disabled="true">
+                <span class="input-group-addon" data-toggle="tooltip" title="Hiển thị password" onclick="Show_password(this);"><i class="glyphicon glyphicon-eye-open"></i></span>
+              </div>            
+              <p class="tagp"></p>
+              <br>
+
+              <div class="input-group" data-toggle="tooltip" title="Nhập lại mật khẩu mới">
+               <span class="input-group-addon">Re-type</span>
+                <input id="password" type="password" class="form-control" name="pass" placeholder="enter confirm new pass" disabled="true">
+              </div>
+              <p class="tagp"></p>
+              <br>
+
+              <div class="form-group">
+                <label for="comment">Hobbies:</label>
+                 <textarea class="form-control" rows="2" id="comment" placeholder="Thêm sở thích của bạn ở đây"></textarea>
+              </div>
+              <p class="tagp"></p>
+
+              <div class="radio">
+                <label><input type="radio" name="optradio" value = "boy">Boy thẳng</label>
+              </div>
+
+              <div class="radio">
+                <label><input type="radio" name="optradio" value = "girl">Girl chuẩn</label>
+              </div>
+
+              <div class="radio">
+                <label><input type="radio" name="optradio" value = "unknown" checked>Không xác định</label>
+              </div>
+              </br>
+
+              <button type="button" class="btn btn-success">Xong</button>
+            </div>
+
+            <div class="modal-footer">
+              <button class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!--cảnh cáo ai đó vì đã có lời lẽ đe dọa hoặc gì đó -->
+    <div id="myModal1" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+
+    <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Cảnh báo người này vì: </h4>
+          </div>
+          <div class="modal-body">
+            <div class="checkbox">
+              <label><input type="checkbox" value="AB111" name="AAA">Lời lẽ xúc phạm, đe dọa, phản động</label>
+            </div>
+            <div class="checkbox">
+              <label><input type="checkbox" value="AB222" name="ABB">Cảm thấy ghét, hận, thù</label>
+            </div>
+            <div class="checkbox">
+              <label><input type="checkbox" value="AB333" name="ACC">Kẻ biến thái</label>
+            </div>
+             <div class="checkbox">
+              <label><input type="checkbox" value="AB444" name="ADD">Tục tĩu, vô duyên</label>
+            </div>
+            <div class="checkbox">
+               <label><input type="checkbox" value="AB555" name="AEE">Không thích người này</label>
+            </div>
+
+            </br>
+            <div class="alert alert-danger">
+              <span class="glyphicon glyphicon-alert"></span>
+              <strong>Danger!</strong> Bạn cần hết sức chú ý vì cảnh báo có ảnh hưởng đến đối phương,
+              cảnh báo lung tung sẽ bị ban quản trị ban hoặc xóa tài khoản!!! Thân ái
+            </div>
+            <button type="button" class="btn btn-warning">Warning</button>
+          </div>
+
+          <div class="modal-footer">
+             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+       </div>
+
+      </div>
+    </div>
+
+    <!-- thay doi cai dat tren app chat-->
+    <div id="myModal2" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+
+    <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Thay đổi cài đặt: </h4>
+          </div>
+          <div class="modal-body">
+
+           <div class="checkbox">
+              <label><input type="checkbox" value="AB222" name="A" checked="">Lưu tin nhắn</label>
+            </div>
+
+            <div class="checkbox">
+              <label><input type="checkbox" value="AB333" name="A">Che giấu thông tin</label>
+            </div>
+
+             <div class="checkbox">
+              <label><input type="checkbox" value="AB333" name="A" checked="">Được nói tục chửi bậy</label>
+            </div>
+
+            <div class="checkbox">
+              <label><input type="checkbox" value="AB333" name="A" checked="">Xóa tin nhắn hàng tháng</label>
+            </div>
+
+            <div class="alert alert-info">
+              <strong>Info!</strong> Hiện tại các chức năng cài đặt này đang được hoàn thiện, mong người dùng thông cảm.!!!
+            </div>
+            
+          </div>
+          <div class="modal-footer">
+             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+       </div>
+
+      </div>
+    </div>
+
+    <!-- thay doi cai dat tren app chat-->
+    <div id="myModal3" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+
+    <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Thông báo từ Boss: </h4>
+          </div>
+          <div class="modal-body">
+           <p>Bạn không có thông báo nào</p>
+          </div>
+          <div class="modal-footer">
+             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+       </div>
+
+      </div>
+    </div>
+
+
+    <nav class="navbar navbar-light" style="background-color: #e3f2fd;height: 51px;">
+      <div class="container-fluid">
+       <div class="navbar-header">
+          <a class="navbar-brand" href="#" style="color: red;">Web App NodeJs</a>
+       </div>
+        <ul class="nav navbar-nav" id="navbar-nav-event">
+            <li><a href="#">Introduce</a></li>
+            <li><a href="#">About us</a></li>
+            <li class="active" data-toggle="tooltip" title="Thông báo từ quản trị viên"><a href="#" data-target="#myModal3" data-toggle="modal" style="margin-top: 2%;">
+            <span class="glyphicon glyphicon-globe" style="font-size: 115%;"><b style="margin-bottom: 100px;color:blue;">(0)</b></span></a></li>
+            <li>
+            <div class="dropdown" >
+
+             <a href="#" data-toggle="dropdown">
+              <span class="glyphicon glyphicon-comment" style="font-size: 125%;margin-top: 42%;margin-left: 40%;"><i style="margin-bottom: 100px;font-size: 98%;color:blue;" data-toggle="tooltip" title="Nhận tin nhắn từ người dùng khác">(0)</i></span>
+             </a>
+
+                <ul class="dropdown-menu" style="width: 1200%;">
+                  <li>
+
+                    <div style="max-height: 300px;overflow-y: scroll;" id = "showinformationuser">
+                     <!-- <div>
+                      <table style="margin-left: 4%;">
+                      <tr>
+                       <td> <img src="http://1.bp.blogspot.com/-3oZ7k46VeG4/Vk0d1nmNODI/AAAAAAAAC20/3B1E5A8BDC4/s1600/hinh-anh-dep-ve-dong-vat..jpg"  class="img-rounded"  style="height: 50px;width: 50px;"></td> 
+                         <td> <div style="margin-left: 4%;"><a href="#">PhamLinh đã nhắn tin cho bạn </a>
+                          <p style="font-style: italic;font-size: 95%;">12:24, 24/6/2017</p></div></td>
+                      </tr>
+                        </table>
+                      </div> -->
+                    </div>
+                  </li>
+                </ul>
+
+              </div>
+            </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="#"><span class="glyphicon glyphicon-user"></span> Your info</a></li>
+          <li>
+            <form class="form-horizontal" method="post" action="/user/home" style="margin-top: 7%;">
+             <input type = "hidden" name = "request_log_out" value = 1 >
+              <span class="glyphicon glyphicon-log-out" style="margin-top: 4%;"></span> 
+              <button name="logout" class="btn btn-link not_underline" style="margin-left: -15%;">&nbsp;Log out</button>
+            </form>
+          </li>
+
+        </ul>
+      </div>
+    </nav>
+  
+
+    <div class="container" style="margin-top:-3%;">
+
+        <div class="row pad-top pad-bottom" style="width: 118%;margin-left: -10%;">
+
+         <div class="col-lg-3 col-md-3 col-sm-3" style="width: 21%;">
+            <div class="chat-box-new-div" >
+                <div class="chat-box-new-head" style="font-size: 120%;font-style: oblique;cursor: pointer;" data-placement="top" title="<%= session.email %>">
+                    <%= session.name %>
+                </div>
+                <div class="panel-body chat-box-new" style="background-color: #e6f9ff;overflow: hidden;">
+                    <img src="<%= session.image %>" class="img-circle" alt="Anh dai dien" style="width: 100%;height: 100%;">
+                    <hr>
+                    <form method="post" enctype="multipart/form-data" style="margin-top: 2%;" action="/user/home">
+                      <input type="file" name="File"/>
+                      <p style="text-align: right; margin-top: 2%;">
+                      <input type="button" value="Upload Files" class="btn btn-sm btn-primary" />
+                      </p>
+                    </form>
+                </div>
+
+            </div>
+          <p id="concac">ccc</p>
+          </div>
+           
+          <div class=" col-lg-6 col-md-6 col-sm-6" style="width: 56%;">
+              <div class="chat-box-div">
+                  <div class="chat-box-head">
+                      GROUP CHAT HISTORY
+                    <div class="btn-group pull-right">
+                      <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="margin-top: -18%;">
+                        <span class="fa fa-cogs"></span>
+                        <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                          <ul class="dropdown-menu" role="menu">
+                            <li><a href="#" data-toggle="modal" data-target="#myModal"><span class="fa fa-book fa-fw" onclick="UpdateProfile()"></span>&nbsp;Cập nhật thông tin</a></li>
+                            <li><a href="#" onclick="TurnOfChat()"><span class="fa fa-comments-o"></span>&nbsp;Tắt/Bật chat</a></li>
+                            <li><a href="#" onclick="DelConversation()"><span class="glyphicon glyphicon-remove-sign">&nbsp;Xoá hội thoại</span></a></li>
+                            <li><a href="#" data-toggle="modal" data-target="#myModal1"><span class="fa fa-lock"></span>&nbsp;Cảnh báo</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#" data-toggle="modal" data-target="#myModal2"><span class="fa fa-circle-o-notch"></span>&nbsp;Setting</a></li>
+                          </ul>
+                      </div>
+                  </div>
+                    <!--  Nội dung chat sẽ hiện ở đây 
+                          Thông tin bao gồm nội dung chat, thời gian, ảnh đại diện, tên của người gửi,
+                           người nhận
+                    -->
+                    
+                    <div class="panel-body chat-box-main" style="height: 485px;">
+
+                         <!--<div class="chat-box-left">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        </div>
+                        <div class="chat-box-name-left">
+                            <img src="/assets/img/user.png" alt="bootstrap Chat box user image" class="img-circle" />
+                            -  Justine Goliyad
+                            
+                        </div>
+                       
+                        <hr class="hr-clas" />
+                        <div class="chat-box-right">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                           Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        </div>
+                        <div class="chat-box-name-right">
+                            <img src="/assets/img/user.gif" alt="bootstrap Chat box user image" class="img-circle" />
+                            - Romin Royeelin
+                            <span style="float: left;margin-top: 5%;font-size: 90%;font-style: italic;margin-left: 5%;"> 18:31, 24/5/2017 </span>
+                        </div>
+                        <hr class="hr-clas" /> -->
+                        
+                    </div>
+                    <!--hien thi animation ve nguoi dung dang nhan tin  -->
+                     <div id="nhapbanphim" style="display:none;margin-left: 15%;"> 
+                       <img src="http://taihinhanhdep.xyz/wp-content/uploads/2015/11/anh-dep-cho-dien-thoai-7.jpg" class="img-rounded" alt="Anh dai dien" width="40" height="40" style="margin-top:-1%;">
+                       <span>.....</span>
+                       <i class="fa fa-spinner fa-spin" style="font-size:24px"></i>
+                       <span>.....</span>
+                     </div>
+
+                    <div class="chat-box-footer">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Enter Text Here..." autofocus="">
+                            <span class="input-group-btn">
+                                <button class="btn btn-info" type="button">SEND</button>
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+          
+            <div class="col-lg-3 col-md-3 col-sm-3" style="width: 23%;">
+                <div class="chat-box-online-div" onscroll='alert("Scroll Called");' >
+                    <div class="chat-box-online-head">
+                      ONLINE USERS (0)                    
+                    </div>
+                    
+                    <div class="panel-body chat-box-online" style="overflow-y: auto; height: 457px;">
+                       <!--<div class="chat-box-online-left">
+                            <img src="/assets/img/user.png" alt="bootstrap Chat box user image" class="img-circle" />
+                            -  Justine Goliyad
+                            <br />
+                            ( <small>Active from 3 hours</small> )
+                        </div>
+                        <hr class="hr-clas-low" /> -->
+                    </div>
+                    <div class="input-group" style="margin-top: 2%;">
+                      <input type="text" class="form-control" placeholder="Search someone...">
+                      <div class="input-group-btn">
+                         <button class="btn btn-default" type="submit">
+                         <i class="glyphicon glyphicon-search"></i>
+                        </button>
+                      </div>
+                    </div>
+
+                </div>
+                <div class="btn-group" id= "cachthucnhantin" style="margin-top: 2%;margin-left: 4%;">
+                  <button type="button" class="btn btn-default active" data-toggle="tooltip" title="Hiển thị danh sách trò chuyện trong ứng dụng">Talking by list</button>
+                  <button type="button" class="btn btn-default" data-toggle="tooltip" title="Auto tìm kiếm ai đó đang online trong ứng dụng, nội dung hội thoại sẽ không được lưu">Talking random</button>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        var yname = "<%= session.name  %>";//ten nguoi dung
+        var yimage = "<%= session.image  %>";//anh dai dien
+        var yemail = "<%= session.email  %>";//dia chi email
+        var yage = "<%= session.age  %>";//tuoi
+        var yid = "<%= session.chat_id %>";//ma chat cua nguoi dung trung voi ma Oject trong csdl
+        var ypass = "<%= session.password  %>";//mat khau cua nguoi dung
+
+      //ham nay se yeu cau server gui ma xac thuc email den cho nguoi dung 
+    /* function Request_log_out()
+     {
+        $.ajax({
+          type:"POST",
+          url:"/user/home",//den file controler home
+          data:{request_log_out: 1},
+          success: function(data)
+          {
+            // location.reload();
+          }
+
+        })
+     }
+
+     var Ulogout = document.getElementById("userloguout");
+     Ulogout.addEventListener("click", function(){
+       Request_log_out();
+     }) */
+
+    </script>
+
+    <!-- USING SCRIPTS BELOW TO REDUCE THE LOAD TIME -->
+    <!-- CORE JQUERY SCRIPTS FILE -->
+    <script src="/assets/js/jquery-1.11.1.js"></script> 
+    <!-- CORE BOOTSTRAP SCRIPTS  FILE -->
+    <script src="/assets/js/bootstrap.js"></script>
+    <script src="/Xulihomepage.js"></script>
+    <script src="/Xulisettinghomepage.js"></script>
+</body>
+
+</html>
