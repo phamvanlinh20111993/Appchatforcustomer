@@ -323,6 +323,17 @@
               //ham bieu dien nguoi dung tren trang web
               //Load noi dung tin nhan tu server
               var Partner_id = "", you_can_using_scroll = false;
+			  
+			  /*  Vấn đề: khi người dùng kicks quá nhiều vào 1 người dùng ta cần hạn chế số lần load
+                từ server do đó ta set 3 tham số, id người ban đầu kick vào, nếu id_first = id_next(Partner_id), 
+                thì giá trị count_num tăng lên 1 và khi người dùng kick tiếp thì không load từ server
+                về nữa vì đó là người dùng cũ, khi kick sang người dùng mới thì id_first != id_next(Partner_id),
+                ta set lai gia tri count_num = 0 ta sẽ load nội dung tin nhắn giữa người dùng và người
+                chat mới vì đó là người dùng mới. ta sẽ cài đặt trong hàm chat(th)
+              */
+              var id_click_user_chat_first = "", count_num_click_user_chat = 0;
+			  
+			  
               /*Khi nguoi dung kick vao bat ki nguoi dung trong danh sach online khac thi mau tren ten cua nguoi
                dung do bi thay doi(cụ thể là màu đỏ), tham số th là 1 html DOM-đại diện cho thẻ span chứa người
                Dùng. id là tham số đại diện cho vị trí của người dùng trong HTML DOM
@@ -349,29 +360,49 @@
                   }
 
                   var themid = Information_user('id');
-                  Div_content_message[0].innerHTML = ""//reset lai hop thoai chat
+                 
                   Partner_id = themid;//ma id cua doi phuong
-                  Load_message(yid, themid, 15, function(data)
+				  
+				  if( id_click_user_chat_first == "" ){
+                     id_click_user_chat_first = Partner_id;
+                     count_num_click_user_chat = 0;
+                  }else
                   {
-                     if(data.length < 15)
-                     {
-                        //hien thi thong tin cua doi phuong
-                        User_info_general = Information_user('all')
-                        User_info_start_chat(User_info_general[7],  User_info_general[5], 
-                           User_info_general[4], User_info_general[0], User_info_general[2]) 
-                        no_message_for_you = false;
+                     if(id_click_user_chat_first.localeCompare(Partner_id) == 0){
+                        count_num_click_user_chat++;
+                     }else{
+                        id_click_user_chat_first = Partner_id;
+                        count_num_click_user_chat = 0;
                      }
-                     Show_message(data)//hien thi tin nhan cua nguoi dung
-                     Div_content_message[0].scrollTop = Div_content_message[0].scrollHeight;
-                  })// mặc định 15 tin nhắn(lịch sử chat) từ 2 người dùng
+                  }
+				  
+				  if(count_num_click_user_chat < 1)
+				  {
+					Div_content_message[0].innerHTML = ""//reset lai hop thoai chat
+					Load_message(yid, themid, 15, function(data)
+					{
+						if(data.length < 15)
+						{
+							//hien thi thong tin cua doi phuong
+							User_info_general = Information_user('all')
+							User_info_start_chat(User_info_general[7],  User_info_general[5], 
+								User_info_general[4], User_info_general[0], User_info_general[2]) 
+							no_message_for_you = false;
+						}
+						Show_message(data)//hien thi tin nhan cua nguoi dung
+						Div_content_message[0].scrollTop = Div_content_message[0].scrollHeight;
+					})// mặc định 15 tin nhắn(lịch sử chat) từ 2 người dùng
+				  
+				    //test để ra thông báo
+					Turnofwiththis(yid, Information_user('id'))
+				  }
 
                   /*ẩn trang thái có ai đó đang nhập phím gửi tin nhắn cho bạn thì   Event_user_typing.style.display =
                      "block" hiển thị báo cho người dùng biết. Khi chuyển người dùng khác để nhắn tin thì nó trở vể
                      trạng thái "none"
                  */
                   Event_user_typing.style.display = "none"
-                  //test để ra thông báo
-                  Turnofwiththis(yid, Information_user('id'))
+                
                   socket.emit('chattingwithsomeone', Information_user('id'))
                   //kiem tra neu nguoi dung kick vao dung nguoi dung da gui tin thi hop thoai
                   //nhan tin moi biet mat
@@ -897,6 +928,7 @@
                   Sub_div_infor_user_on[0].innerHTML = "Không nên lạm dụng nút này."
               }
               Partner_id = ""//chua nhan tin voi ai
+			  id_click_user_chat_first = ""
             })
 
             //Talking random
@@ -908,6 +940,7 @@
               Load_user(2, "", 0)
               count_click_talkingbylist = 0;//khoi phuc ve trang thai ban dau
                Partner_id = ""//chua nhan tin voi ai
+			   id_click_user_chat_first = ""
             })
 
             //ham su li su kien nguoi dung scroll tim kiem nguoi dung khac
@@ -921,6 +954,7 @@
                   Load_user(1, "", num_of_user_request*12)
               }
                Partner_id  = "" //chua nhan tin voi ai
+			   id_click_user_chat_first = ""
             })
 
             //load thong tin nguoi dung chua doc tin nhan

@@ -127,13 +127,12 @@
       {
          //lay ten nguoi dung 
          user_name = Information_user('name')
-			id_user = Information_user('id') // lay id nguoi dung  
-      }
-
-		var r = confirm("Bạn chắc chắn tắt chat với "+ user_name + ", Sau 10 ngày hệ thống sẽ tự động bật chat ???")
-		if(r == true){
+		 id_user = Information_user('id') // lay id nguoi dung
+		 var r = confirm("Bạn chắc chắn tắt chat với "+ user_name + ", Sau 10 ngày hệ thống sẽ tự động bật chat ???")
+		 if(r == true){
 			TurnOfChat_someone(yid, id_user)
-		}
+		 }
+      }
 
 	}
 
@@ -147,11 +146,10 @@
          //lay ten nguoi dung 
          user_name = Information_user('name')//lay ten nguoi dung bi xoa
          id_user = Information_user('id') // lay id nguoi dung  ben kia 
-      }
-
-      var r = confirm("Bạn chắc chắn xoá hết hội thoại với "+ user_name + "???")
-      if(r == true){
-         Del_conversation_someone(yid, id_user)
+		 var r = confirm("Bạn chắc chắn xoá hết hội thoại với "+ user_name + "???")
+		 if(r == true){
+			Del_conversation_someone(yid, id_user)
+		 }
       }
   }
 
@@ -359,8 +357,9 @@
          if(Information_user('truefalse'))//người dùng đang nói chuyện với ai
          {
             who_warning = Information_user('id')//lay id ma nguoi dung se canh bao
-         }
 			Warnning_Someone(who_warning, valu)//tham so who_warning la cảnh báo ai, valu là mã cảnh báo
+         }
+			
 		}
 		 	
 	})

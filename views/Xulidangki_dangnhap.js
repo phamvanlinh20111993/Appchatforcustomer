@@ -1,4 +1,7 @@
-  //ham nay se yeu cau server gui ma xac thuc email den cho nguoi dung 
+ 
+	$('#myModal').modal('show')
+	
+ //ham nay se yeu cau server gui ma xac thuc email den cho nguoi dung 
   //sau khi nguoi dung da dang ki day du cac thong tin va he thong chap nhan
   	 function Request_send_verification_code(mail, alias, age, password)
      {
